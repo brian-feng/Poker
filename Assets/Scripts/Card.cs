@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.UIElements.Experimental;
 
 /// <summary>
@@ -19,6 +20,29 @@ public class Card : MonoBehaviour
     public Card(int v, Suit s){
         value = v;
         suit = s;
+    }
+
+    public Card(int v, Suit s, Sprite newSprite){
+        value = v;
+        suit = s;
+    }
+
+    /// <summary>
+    /// Returns the string representation of the card in the format "[suite] [number]" where suite is d for diamonds, c for clubs, h for hearts, or s for spades, and number always has two digits.
+    /// </summary>
+    public String toString(){
+        if(suit == Suit.Diamonds){
+            return "d " + value.ToString("D2");
+        }
+        else if(suit == Suit.Clubs){
+            return "c " + value.ToString("D2");
+        }
+        else if(suit == Suit.Hearts){
+            return "h " + value.ToString("D2");
+        }
+        else{
+            return "s " + value.ToString("D2");
+        }
     }
 }
 

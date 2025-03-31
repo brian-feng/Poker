@@ -42,6 +42,6 @@ public class HandTestScript
         Assert.IsTrue(hand1.GetCards()[2].value == cards[3].value && hand1.GetCards()[2].suit == cards[3].suit);
         Assert.IsTrue(hand1.GetCards()[3].value == cards[1].value && hand1.GetCards()[3].suit == cards[1].suit);
         Assert.IsTrue(hand1.GetCards()[4].value == cards[4].value && hand1.GetCards()[4].suit == cards[4].suit);
-
+        
     }
 }

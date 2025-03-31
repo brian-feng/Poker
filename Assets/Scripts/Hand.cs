@@ -14,6 +14,7 @@ public class Hand {
     private CardComparer comp = new CardComparer();
 
     // ----- Constructors ------
+    
     public Hand(List<Card> newCards){
         foreach(Card card in newCards){
             AddCard(card);
@@ -24,6 +25,7 @@ public class Hand {
     }
 
     // ----- Accessors ------
+
     /// <summary>
     /// Returns the number of cards currently in the hand.
     /// </summary>
