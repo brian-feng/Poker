@@ -8,7 +8,7 @@ namespace VideoPoker {
 	public class GameManager : MonoBehaviour
 	{
 		[SerializeField]
-		public List<Card> cards;
+		public Hand hand;
 		public static GameManager Singleton { get; private set; }
 
 		void Awake()
@@ -20,7 +20,7 @@ namespace VideoPoker {
 
 		void Start()
 		{
-
+			
 		}
 		
 		void Update()

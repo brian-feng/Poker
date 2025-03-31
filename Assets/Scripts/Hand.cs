@@ -11,6 +11,9 @@ public class Hand {
 
     private List<Card> _cards;
     private int _value = 0;
+    private CardComparer comp = new CardComparer();
+
+    // ----- Constructors ------
     public Hand(List<Card> newCards){
         foreach(Card card in newCards){
             AddCard(card);
@@ -20,7 +23,31 @@ public class Hand {
         _cards = new List<Card>();
     }
 
-    // ----- Hand manipulation utility functions ------
+    // ----- Accessors ------
+    /// <summary>
+    /// Returns the number of cards currently in the hand.
+    /// </summary>
+    public int Count(){
+        return _cards.Count;
+    }
+
+    // ----- Accessors ------
+    /// <summary>
+    /// Returns the list of cards currently in the hand (DEBUGGING ONLY).
+    /// </summary>
+    public List<Card> GetCards(){
+        return _cards;
+    }
+
+    // ----- Accessors ------
+    /// <summary>
+    /// Returns the value of the hand. Does not ensure that the value has already been calculated.
+    /// </summary>
+    public int GetValue(){
+        return _value;
+    }
+
+    // ----- Mutators ------
 
     /// <summary>
     /// Removes all cards from the hand.
@@ -35,13 +62,17 @@ public class Hand {
     /// <param name="target">The card to be removed.</param>
     public void DeleteCard(Card target){
         foreach(Card card in _cards){
-            if(card.CompareTo(target) == 0){
+            if(comp.Compare(card, target) == 0){
                 _cards.Remove(card);
                 return;
             }
         }
     }
 
+    /// <summary>
+    /// Removes the cards in the parameter from the hand.
+    /// </summary>
+    /// <param name="targets">The cards to be removed.</param>
     public void DeleteCards(List<Card> targets){
         foreach(Card target in targets){
             DeleteCard(target);
@@ -89,9 +120,16 @@ public class Hand {
         }
     }
 
+    /// <summary>
+    /// Sorts the hand from from smallest card at index 0 to largest card.
+    /// </summary>
+    public void SortHand(){
+        _cards.Sort(comp);
+    }
+
     // ----- Hand calculation functions ------
 
-    public int countOf(int target){
+    private int countOf(int target){
         int count = 0;
         foreach (Card card in _cards){
             if(card.value == target){
@@ -101,16 +139,12 @@ public class Hand {
         return count;
     }
 
-    public bool contains(int target){
+    private bool contains(int target){
         foreach (Card card in _cards){
             if(card.value == target){
                 return true;
             }
         }
         return false;
-    }
-
-    public bool isFlush(){
-        
     }
 }
