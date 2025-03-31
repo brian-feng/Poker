@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 4677759296469084340}
   - component: {fileID: 4677759296469084338}
   - component: {fileID: 4677759296469084339}
-  - component: {fileID: 2155967760691503869}
   - component: {fileID: 27920982354198075}
   m_Layer: 5
   m_Name: CardPrefab
@@ -89,24 +88,10 @@ MonoBehaviour:
     m_SelectedTrigger: Highlighted
     m_DisabledTrigger: Disabled
   m_Interactable: 1
-  m_TargetGraphic: {fileID: 0}
+  m_TargetGraphic: {fileID: 27920982354198075}
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &2155967760691503869
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4677759296469084341}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7e3b483a64c6c1040a7e0d975d5d2345, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  value: 1
-  suit: 0
 --- !u!114 &27920982354198075
 MonoBehaviour:
   m_ObjectHideFlags: 0

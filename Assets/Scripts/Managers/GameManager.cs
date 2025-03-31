@@ -3,13 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using System.Runtime.ExceptionServices;
+using UnityEngine.UI;
 
 
 namespace VideoPoker {
 	public class GameManager : MonoBehaviour
 	{
-		[SerializeField]
 		private List<Card> _deck;
+		[SerializeField]
+		private HorizontalLayoutGroup cardHolder;
+		[SerializeField]
+		private GameObject _cardPrefab;
 		public Hand hand;
 		public static GameManager Singleton { get; private set; }
 
@@ -22,9 +26,10 @@ namespace VideoPoker {
 
 		void Start()
 		{
+			_deck = new List<Card>();
 			InitializeDeck();
 			ShuffleDeck();
-			PrintDeck();
+			InitializeHand();
 		}
 		
 		void Update()
@@ -53,7 +58,7 @@ namespace VideoPoker {
 
 		public void PrintDeck(){
 			foreach(Card c in _deck){
-				Debug.Log(c.toString());
+				Debug.Log(c.ToString());
 			}
 		}
 
@@ -65,6 +70,20 @@ namespace VideoPoker {
 
 		public void ReturnCard(Card card){
 			_deck.Add(card);
+		}
+
+		public void InitializeHand(){
+			// Deal initial 5 cards
+			hand = new Hand();
+			for(int i = 0; i < 5; i++){
+				hand.AddCard(Draw());
+			}
+
+			// Load the sprites
+			foreach(Card c in hand.GetCards()){
+				GameObject newCard = Instantiate(_cardPrefab, cardHolder.transform);
+				newCard.GetComponent<Image>().sprite = Resources.Load<Sprite>("Art/Cards/img_card_" + c.ToString());
+			}
 		}
 	}
 }
