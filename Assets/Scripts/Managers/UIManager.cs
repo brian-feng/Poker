@@ -38,8 +38,6 @@ namespace VideoPoker
 			else Singleton = this;
 		}
 
-		//-//////////////////////////////////////////////////////////////////////
-		/// 
 		void Start()
 		{
 			dealButton.onClick.AddListener(OnDealButtonPressed);
@@ -47,21 +45,21 @@ namespace VideoPoker
 			decreaseBetButton.onClick.AddListener(OnBetDecreaseButtonPressed);
 		}
 
-		//-//////////////////////////////////////////////////////////////////////
-		///
-		/// Event that triggers when bet button is pressed
-		/// 
 		private void OnDealButtonPressed()
 		{
 			if(bet == 0){
 				return;
 			}
 			if(phase == 0){
-				phase = 1;
-				GameManager.Singleton.SetBet(bet);
-				DeckManager.Singleton.Deal();
-				increaseBetButton.gameObject.SetActive(false);
-				decreaseBetButton.gameObject.SetActive(false);
+				if(GameManager.Singleton.SetBet(bet)){
+					phase = 1;
+					DeckManager.Singleton.Deal();
+					increaseBetButton.gameObject.SetActive(false);
+					decreaseBetButton.gameObject.SetActive(false);
+				}
+				else{
+					return;
+				}
 			}
 			else if(phase == 1){
 				phase = 2;
@@ -99,5 +97,9 @@ namespace VideoPoker
 		public void UpdateWinningText(int newWinnings){
 			winningText.text = "Jacks or Better! You won " + newWinnings + " credits.";
 		}
-	}
+
+        public void Loser(){
+			winningText.text = "You have no money :(";
+		}
+    }
 }

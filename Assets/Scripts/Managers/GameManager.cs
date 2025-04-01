@@ -26,10 +26,14 @@ namespace VideoPoker {
 			UIManager.Singleton.UpdateCredits(credits);
         }
 
-        public void SetBet(int newBet){
+        public bool SetBet(int newBet){
+			if(newBet > credits){
+				return false;
+			}
 			bet = newBet;
 			credits -= newBet;
 			UIManager.Singleton.UpdateCredits(credits);
+			return true;
 		}
 
 		public void Payout(){
@@ -37,6 +41,9 @@ namespace VideoPoker {
 			UIManager.Singleton.UpdateWinningText(value * bet);
 			credits += value * bet;
 			UIManager.Singleton.UpdateCredits(credits);
+			if(credits == 0){
+				UIManager.Singleton.Loser();
+			}
 		}
 	}
 }
