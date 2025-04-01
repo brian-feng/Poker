@@ -11,6 +11,8 @@ public class AudioManager : MonoBehaviour
     private AudioSource audioData;
     [SerializeField]
     private AudioClip dealSound;
+    [SerializeField]
+    private AudioClip winSound;
     public static AudioManager Singleton { get; private set; }
 
     void Awake()
@@ -25,6 +27,11 @@ public class AudioManager : MonoBehaviour
     }
     public void PlayDealSound(){
         audioData.clip = dealSound;
+        audioData.Play();
+    }
+
+    public void PlayWinSound(){
+        audioData.clip = winSound;
         audioData.Play();
     }
 }

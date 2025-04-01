@@ -28,6 +28,8 @@ namespace VideoPoker
 		private Button increaseBetButton10 = null;
 		[SerializeField]
 		private Button dealButton = null;
+		[SerializeField]
+		private Text dealButtonText = null;
 		private int bet = 0;
 
 		// 0 - Choosing bets
@@ -65,6 +67,7 @@ namespace VideoPoker
 					decreaseBetButton.gameObject.SetActive(false);
 					increaseBetButton10.gameObject.SetActive(false);
 					decreaseBetButton10.gameObject.SetActive(false);
+					dealButtonText.text = "RE-DEAL";
 				}
 				else{
 					return;
@@ -75,6 +78,7 @@ namespace VideoPoker
 				DeckManager.Singleton.Redeal();
 				GameManager.Singleton.Payout();
 				DeckManager.Singleton.DisableCardUI();
+				dealButtonText.text = "CONTINUE";
 			}
 			else{
 				phase = 0;
@@ -86,6 +90,7 @@ namespace VideoPoker
 				bet = 0;
 				UpdateBet();
 				RevertWinningText();
+				dealButtonText.text = "DEAL";
 			}
 		}
 

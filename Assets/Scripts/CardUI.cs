@@ -10,11 +10,11 @@ public class CardUI : MonoBehaviour
     public Card card;
     public bool hold = false;
     [SerializeField]
-    private GameObject HoldText;
+    private GameObject Highlight;
 
     public void OnPress(){
         hold = !hold;
-        HoldText.SetActive(hold);
+        Highlight.SetActive(hold);
     }
 
 }

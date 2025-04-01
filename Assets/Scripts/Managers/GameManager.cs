@@ -4,6 +4,7 @@ using UnityEngine;
 using System;
 using System.Runtime.ExceptionServices;
 using UnityEngine.UI;
+using UnityEngine.AI;
 
 
 namespace VideoPoker {
@@ -41,6 +42,9 @@ namespace VideoPoker {
 			UIManager.Singleton.UpdateWinningText(value * bet);
 			credits += value * bet;
 			UIManager.Singleton.UpdateCredits(credits);
+			if(value > 0){
+				AudioManager.Singleton.PlayWinSound();
+			}
 			if(credits == 0){
 				UIManager.Singleton.Loser();
 			}
