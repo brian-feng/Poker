@@ -15,6 +15,7 @@ public class Hand {
     // ----- Constructors ------
 
     public Hand(List<Card> newCards){
+        _cards = new List<Card>();
         foreach(Card card in newCards){
             AddCard(card);
         }
@@ -213,7 +214,7 @@ public class Hand {
         return threes == 1 && twos == 1;
     }
     private bool HasFlush(){
-        for(int i = 0; i < 5; i++){
+        for(int i = 0; i < 4; i++){
             if(_cards[i].suit != _cards[i+1].suit){
                 return false;
             }
@@ -223,7 +224,7 @@ public class Hand {
 
     private bool HasStraight(){
         for(int i = 0; i < 4; i++){
-            if((_cards[i].value - 2) % 13 != (_cards[i].value - 2) % 13 + 1){
+            if(comp.Compare(_cards[i], _cards[i+1]) != -1){
                 return false;
             }
         }

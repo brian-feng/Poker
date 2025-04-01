@@ -47,9 +47,16 @@ public class CardComparer : IComparer<Card>
     /// <param name="obj">The card to be compared to.</param>
     public int Compare(Card a, Card b){
         // 1 is considered to be larger than 13
-        if((a.value - 2) % 13 == (b.value - 2) % 13){
+        if(modulus(a.value - 2, 13) == modulus(b.value - 2, 13)){
             return a.suit - b.suit;
         }
-        return (a.value - 2) % 13 - (b.value - 2) % 13;
+        return modulus(a.value - 2, 13) - modulus(b.value - 2, 13);
+    }
+
+    private int modulus(int a, int b){
+        if(a < 0){
+            a += b;
+        }
+        return a % b;
     }
 }
