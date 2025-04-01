@@ -5,7 +5,9 @@ using System;
 using System.Runtime.ExceptionServices;
 using UnityEngine.UI;
 
-
+/// <summary>
+/// The manager that handles all sound effects that play. Very simplistically contains a function for every clip of audio that may be used.
+/// </summary>
 public class AudioManager : MonoBehaviour
 {
     private AudioSource audioData;
@@ -25,11 +27,18 @@ public class AudioManager : MonoBehaviour
     {
         audioData = GetComponent<AudioSource>();
     }
+    
+    /// <summary>
+    /// Plays the card dealing sound effect
+    /// </summary>
     public void PlayDealSound(){
         audioData.clip = dealSound;
         audioData.Play();
     }
 
+    /// <summary>
+    /// Plays the winning jingle
+    /// </summary>
     public void PlayWinSound(){
         audioData.clip = winSound;
         audioData.Play();

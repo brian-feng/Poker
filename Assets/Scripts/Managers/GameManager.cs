@@ -27,6 +27,10 @@ namespace VideoPoker {
 			UIManager.Singleton.UpdateCredits(credits);
         }
 
+		/// <summary>
+		/// Updates the bet and updates the game state to reflect it. 
+		/// </summary>
+		/// <param name="newBet">The new value of bet</param>
         public bool SetBet(int newBet){
 			if(newBet > credits){
 				return false;
@@ -36,7 +40,10 @@ namespace VideoPoker {
 			UIManager.Singleton.UpdateCredits(credits);
 			return true;
 		}
-
+		
+		/// <summary>
+		/// Calculates how much the hand is worth then updates the game state to reflect that. 
+		/// </summary>
 		public void Payout(){
 			int value = DeckManager.Singleton.GetHand().CalculateValue();
 			UIManager.Singleton.UpdateWinningText(value * bet);

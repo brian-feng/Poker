@@ -10,6 +10,7 @@ namespace VideoPoker
 	/// </summary>
 	public class UIManager : MonoBehaviour
 	{
+		[Header("Counters")]
 		[SerializeField]
 		private Text currentBalanceText = null;
 
@@ -17,7 +18,10 @@ namespace VideoPoker
 		private Text winningText = null;
 		[SerializeField]
 		private Text betText = null;
+		[SerializeField]
+		private Text dealButtonText = null;
 
+		[Header("Buttons")]
 		[SerializeField]
 		private Button decreaseBetButton = null;
 		[SerializeField]
@@ -28,8 +32,6 @@ namespace VideoPoker
 		private Button increaseBetButton10 = null;
 		[SerializeField]
 		private Button dealButton = null;
-		[SerializeField]
-		private Text dealButtonText = null;
 		private int bet = 0;
 
 		// 0 - Choosing bets

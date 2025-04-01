@@ -41,6 +41,9 @@ namespace VideoPoker {
 			}
         }
 
+        /// <summary>
+        /// Deals the top five cards from the deck and begins the game.
+        /// </summary>
         public void Deal()
 		{
 			ShuffleDeck();
@@ -50,9 +53,11 @@ namespace VideoPoker {
             }
             
             hand.SortHand();
-            RefreshHand();
+            RefreshHandUI();
 		}
-
+        /// <summary>
+        /// Function to call after player wants to re-deal their cards.
+        /// </summary>
         public void Redeal(){
             bool redrawn = false;
             CardUI[] cards = _cardHolder.GetComponentsInChildren<CardUI>();
@@ -73,9 +78,12 @@ namespace VideoPoker {
             }
             
             hand.SortHand();
-            RefreshHand();
+            RefreshHandUI();
         }
 
+        /// <summary>
+        /// Function to restart the game.
+        /// </summary>
         public void Restart(){
             CardUI[] cards = _cardHolder.GetComponentsInChildren<CardUI>();
             foreach(CardUI c in cards){
@@ -84,6 +92,9 @@ namespace VideoPoker {
             }
         }
 
+        /// <summary>
+        /// Shuffles the deck. Moves every card to a random spot further than its current spot. 
+        /// </summary>
 		public void ShuffleDeck() {
 			System.Random rand = new System.Random();
 			for(int i = 0; i < _deck.Count; i++){
@@ -94,18 +105,28 @@ namespace VideoPoker {
 			}
 		}
 
+        /// <summary>
+        /// Removes the top card from the deck and returns it.
+        /// </summary>
         public Card Draw(){
 			Card temp = _deck[0];
 			_deck.RemoveAt(0);
 			return temp;
 		}
 
+        /// <summary>
+        /// Sends a card to the bottom of the deck.
+        /// </summary>
+        /// <param name="card">The card to be returned to the deck.</param>
 		public void ReturnCard(Card card){
 			_deck.Add(card);
             hand.DeleteCard(card);
 		}
 
-        public void RefreshHand(){
+        /// <summary>
+        /// Refreshes the cards currently displayed in the UI.
+        /// </summary>
+        public void RefreshHandUI(){
             foreach(Card c in hand.GetCards()){
                 GameObject newCard = Instantiate(_cardPrefab, _cardHolder.transform);
 				newCard.GetComponent<Image>().sprite = Resources.Load<Sprite>("Art/Cards/img_card_" + c.ToString());
@@ -113,19 +134,28 @@ namespace VideoPoker {
             } 
         }
 
+        /// <summary>
+        /// Prevents every card from being pressed. To be used after re-dealing.
+        /// </summary>
         public void DisableCardUI(){
             Button[] cards = _cardHolder.GetComponentsInChildren<Button>();
             foreach(Button b in cards){
                 b.enabled = false;
             }
         }
-
+        
+        /// <summary>
+        /// Prints all cards in the deck, not including cards in the hand (DEBUGGING ONLY).
+        /// </summary>
         public void PrintDeck(){
 			foreach(Card c in _deck){
 				Debug.Log(c.ToString());
 			}
 		}
 
+        /// <summary>
+        /// Returns the hand
+        /// </summary>
         public Hand GetHand(){
             return hand;
         }
