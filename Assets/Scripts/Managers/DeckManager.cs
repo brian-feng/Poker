@@ -7,6 +7,9 @@ using UnityEngine.UI;
 
 
 namespace VideoPoker {
+    /// <summary>
+    /// The manager for the virtual deck of cards used to play Video Poker. Handles everything to do with dealing, shuffling, and resetting the deck after play. 
+    /// </summary>
 	public class DeckManager : MonoBehaviour
 	{
 		private List<Card> _deck;
@@ -51,11 +54,16 @@ namespace VideoPoker {
 		}
 
         public void Redeal(){
+            bool redrawn = false;
             CardUI[] cards = _cardHolder.GetComponentsInChildren<CardUI>();
             foreach(CardUI c in cards){
                 if(!c.hold){
                     ReturnCard(c.card);
                     hand.AddCard(Draw());
+                    if(!redrawn){
+                        AudioManager.Singleton.PlayDealSound();
+                        redrawn = true;
+                    }
                 }
                 else{
                     // Reset hold to false

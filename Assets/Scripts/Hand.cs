@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.UIElements.Experimental;
 
 /// <summary>
-/// The backend hand class. This class prevents cards from exceeding a count of 5 and will log an error when attempting to add to a full hand.
+/// The backend hand class. This class will handle constructing, removing from, and calculating the value of a list of 5 cards. This class prevents cards from exceeding a count of 5 and will log an error when attempting to add to a full hand.
 /// </summary>
 public class Hand {
 
@@ -129,6 +129,9 @@ public class Hand {
         }
     }
 
+    /// <summary>
+    /// Returns the value of the hand. See https://en.wikipedia.org/wiki/Video_poker for value table.
+    /// </summary>
     public int CalculateValue(){
         if(HasRoyalFlush()){
             return 800;
@@ -163,7 +166,6 @@ public class Hand {
     }
 
     // ----- Hand calculation functions ------
-
     private int CountOf(int target){
         int count = 0;
         foreach (Card card in _cards){

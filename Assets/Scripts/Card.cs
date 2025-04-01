@@ -39,10 +39,13 @@ public class Card : System.Object
     }
 }
 
+/// <summary>
+/// Implementation of a Comparer for Cards. Prioritizes values then suits. However, 1 is considered to be the largest value.
+/// </summary>
 public class CardComparer : IComparer<Card>
 {
     /// <summary>
-    /// Implementation of CompareTo for Card. Prioritizes values then suits. However, 1 is considered to be the largest value.
+    /// Compares two cards. Prioritizes values then suits. However, 1 is considered to be the largest value.
     /// </summary>
     /// <param name="obj">The card to be compared to.</param>
     public int Compare(Card a, Card b){
@@ -53,6 +56,7 @@ public class CardComparer : IComparer<Card>
         return modulus(a.value - 2, 13) - modulus(b.value - 2, 13);
     }
 
+    // Because C# has no built in modulus function (% is remainder) I had to implement this one myself
     private int modulus(int a, int b){
         if(a < 0){
             a += b;

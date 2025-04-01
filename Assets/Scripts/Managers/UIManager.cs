@@ -2,12 +2,12 @@
 using UnityEngine.AI;
 using UnityEngine.UI;
 
+
 namespace VideoPoker
 {
-	//-//////////////////////////////////////////////////////////////////////
-	///
-	/// Manages UI including button events and updates to text fields
-	/// 
+	/// <summary>
+	/// The manager for all UI not directly related to cards. Updates the UI but does not internally save the state of the game elements like bet or balance.
+	/// </summary>
 	public class UIManager : MonoBehaviour
 	{
 		[SerializeField]
@@ -21,7 +21,11 @@ namespace VideoPoker
 		[SerializeField]
 		private Button decreaseBetButton = null;
 		[SerializeField]
+		private Button decreaseBetButton10 = null;
+		[SerializeField]
 		private Button increaseBetButton = null;
+		[SerializeField]
+		private Button increaseBetButton10 = null;
 		[SerializeField]
 		private Button dealButton = null;
 		private int bet = 0;
@@ -43,6 +47,8 @@ namespace VideoPoker
 			dealButton.onClick.AddListener(OnDealButtonPressed);
 			increaseBetButton.onClick.AddListener(OnBetIncreaseButtonPressed);
 			decreaseBetButton.onClick.AddListener(OnBetDecreaseButtonPressed);
+			increaseBetButton10.onClick.AddListener(OnBetIncreaseButtonPressed10);
+			decreaseBetButton10.onClick.AddListener(OnBetDecreaseButtonPressed10);
 		}
 
 		private void OnDealButtonPressed()
@@ -53,9 +59,12 @@ namespace VideoPoker
 			if(phase == 0){
 				if(GameManager.Singleton.SetBet(bet)){
 					phase = 1;
+					AudioManager.Singleton.PlayDealSound();
 					DeckManager.Singleton.Deal();
 					increaseBetButton.gameObject.SetActive(false);
 					decreaseBetButton.gameObject.SetActive(false);
+					increaseBetButton10.gameObject.SetActive(false);
+					decreaseBetButton10.gameObject.SetActive(false);
 				}
 				else{
 					return;
@@ -72,14 +81,17 @@ namespace VideoPoker
 				DeckManager.Singleton.Restart();
 				increaseBetButton.gameObject.SetActive(true);
 				decreaseBetButton.gameObject.SetActive(true);
+				increaseBetButton10.gameObject.SetActive(true);
+				decreaseBetButton10.gameObject.SetActive(true);
 				bet = 0;
-				betText.text = "Bet: " + bet.ToString() + " Credits";
+				UpdateBet();
+				RevertWinningText();
 			}
 		}
 
 		private void OnBetIncreaseButtonPressed(){
 			bet++;
-			betText.text = "Bet: " + bet.ToString() + " Credits";
+			UpdateBet();
 		}
 
 		private void OnBetDecreaseButtonPressed(){
@@ -87,15 +99,39 @@ namespace VideoPoker
 				return;
 			}
 			bet--;
-			betText.text = "Bet: " + bet.ToString() + " Credits";
+			UpdateBet();
 		}
 
+		private void OnBetIncreaseButtonPressed10()
+        {
+            bet += 10;
+            UpdateBet();
+        }
+
+        
+        private void OnBetDecreaseButtonPressed10(){
+			if(bet <= 9){
+				return;
+			}
+			bet-=10;
+			UpdateBet();
+		}
+
+		private void UpdateBet()
+        {
+            betText.text = bet.ToString();
+        }
+
 		public void UpdateCredits(int newCredits){
-			currentBalanceText.text = "Balance: " + newCredits.ToString() + " Credits";
+			currentBalanceText.text = newCredits.ToString();
 		}
 
 		public void UpdateWinningText(int newWinnings){
-			winningText.text = "Jacks or Better! You won " + newWinnings + " credits.";
+			winningText.text = "You won " + newWinnings.ToString() + " credits!";
+		}
+
+		public void RevertWinningText(){
+			winningText.text = "Jacks or Better!";
 		}
 
         public void Loser(){
