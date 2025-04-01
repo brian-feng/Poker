@@ -25,7 +25,11 @@ namespace VideoPoker
 		[SerializeField]
 		private Button dealButton = null;
 		private int bet = 0;
-		private bool dealt = false;
+
+		// 0 - Choosing bets
+		// 1 - Initial Deal
+		// 2 - Payout
+		private int phase = 0;
 		public static UIManager Singleton { get; private set; }
 
 		void Awake()
@@ -49,11 +53,29 @@ namespace VideoPoker
 		/// 
 		private void OnDealButtonPressed()
 		{
-			if(!dealt){
-				dealt = true;
+			if(bet == 0){
+				return;
+			}
+			if(phase == 0){
+				phase = 1;
+				GameManager.Singleton.SetBet(bet);
 				DeckManager.Singleton.Deal();
 				increaseBetButton.gameObject.SetActive(false);
 				decreaseBetButton.gameObject.SetActive(false);
+			}
+			else if(phase == 1){
+				phase = 2;
+				DeckManager.Singleton.Redeal();
+				GameManager.Singleton.Payout();
+				DeckManager.Singleton.DisableCardUI();
+			}
+			else{
+				phase = 0;
+				DeckManager.Singleton.Restart();
+				increaseBetButton.gameObject.SetActive(true);
+				decreaseBetButton.gameObject.SetActive(true);
+				bet = 0;
+				betText.text = "Bet: " + bet.ToString() + " Credits";
 			}
 		}
 
@@ -68,6 +90,14 @@ namespace VideoPoker
 			}
 			bet--;
 			betText.text = "Bet: " + bet.ToString() + " Credits";
+		}
+
+		public void UpdateCredits(int newCredits){
+			currentBalanceText.text = "Balance: " + newCredits.ToString() + " Credits";
+		}
+
+		public void UpdateWinningText(int newWinnings){
+			winningText.text = "Jacks or Better! You won " + newWinnings + " credits.";
 		}
 	}
 }
